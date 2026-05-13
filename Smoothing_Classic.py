@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import Pseudopressure_Conversion
 from scipy import stats
+from svg_to_emf import convert_svg_to_emf
 
 # ----- Import Production Data -----
 def read_production(file_path):
@@ -54,9 +55,9 @@ def read_noisy_RNP (file_path):
 # ----- Main Execution -----
 def main():
     # Production data file path
-    downhole_file_path = r"C:\Users\ASUS\Documents\Kuliah\2. Master's Texas A&M University\Publications\Conference Paper\Outlier Detection Paper\Outlier Detection Simulator\Synthetic Model\downhole_gas_rate.txt"
-    surface_file_path = r"C:\Users\ASUS\Documents\Kuliah\2. Master's Texas A&M University\Publications\Conference Paper\Outlier Detection Paper\Outlier Detection Simulator\Synthetic Model\surface_gas_rate.txt"
-    volume_file_path = r"C:\Users\ASUS\Documents\Kuliah\2. Master's Texas A&M University\Publications\Conference Paper\Outlier Detection Paper\Outlier Detection Simulator\Synthetic Model\surface_gas_volume.txt"
+    downhole_file_path = r"C:\Users\felix\OneDrive\Documents\Kuliah\2. Master's Texas A&M University\Publications\Conference Paper\Outlier Detection Paper\Outlier Detection Simulator\Synthetic Model\downhole_gas_rate.txt"
+    surface_file_path = r"C:\Users\felix\OneDrive\Documents\Kuliah\2. Master's Texas A&M University\Publications\Conference Paper\Outlier Detection Paper\Outlier Detection Simulator\Synthetic Model\surface_gas_rate.txt"
+    volume_file_path = r"C:\Users\felix\OneDrive\Documents\Kuliah\2. Master's Texas A&M University\Publications\Conference Paper\Outlier Detection Paper\Outlier Detection Simulator\Synthetic Model\surface_gas_volume.txt"
 
     # Define actual time and rate data
     time, downhole_rate = read_production(downhole_file_path) # hr, Mcf/d
@@ -73,7 +74,7 @@ def main():
     print(RNP_data[0])
 
     # Export true RNP data
-    file_path = "C:/Users/ASUS/Documents/Kuliah/2. Master's Texas A&M University/Publications/Conference Paper/Smoothing Paper/Smoothing Simulator/true_RNP.txt"
+    file_path = "C:/Users/felix/OneDrive/Documents/Kuliah/2. Master's Texas A&M University/Publications/Conference Paper/Smoothing Paper/Smoothing Simulator/true_RNP.txt"
     with open(file_path, "w") as file:
         # Write the header
         file.write("t(days)\tRNP(psia2/cp-d/Mscf)\n")
@@ -82,7 +83,7 @@ def main():
             file.write(f"{x}\t{y}\n")
 
     # Noisy RNP data file path
-    noisy_RNP_file_path = f"C:/Users/ASUS/Documents/Kuliah/2. Master's Texas A&M University/Publications/Conference Paper/Outlier Detection Paper/Outlier Detection Simulator/Noisy RNP Model/All/25%/noisy_data_5.txt"
+    noisy_RNP_file_path = f"C:/Users/felix/OneDrive/Documents/Kuliah/2. Master's Texas A&M University/Publications/Conference Paper/Outlier Detection Paper/Outlier Detection Simulator/Noisy RNP Model/All/25%/noisy_data_5.txt"
     noisy_time, noisy_RNP = read_noisy_RNP(noisy_RNP_file_path)
     noisy_data = np.column_stack((noisy_time, noisy_RNP))
 
@@ -124,7 +125,7 @@ def main():
     #plt.plot(np.exp(x_poly2), np.exp(y_poly2), '--', label = 'polynomial regression (degree = 10)', linewidth = '3', alpha = 0.8)
     plt.plot(noisy_time[window_size1-1:], moving_average1, '-', label = 'moving average (window = 5)', linewidth = '3', alpha = 0.75)
     #plt.plot(noisy_time[window_size2-1:], moving_average2, '-', label = 'moving average (window = 20)', linewidth = '3', alpha = 0.75)
-    plt.xlabel("t, days", fontsize = 20)
+    plt.xlabel("$t$, day", fontsize = 20)
     plt.ylabel("$\Delta$m(p)/$q_{g}$, $psia^{2}$/cp$\cdot$d/Mscf", fontsize = 20)
     plt.xscale("log")
     plt.yscale("log")
@@ -135,7 +136,13 @@ def main():
     plt.grid(True, which = 'minor', linestyle = ':', linewidth = 0.5)
     plt.legend(fontsize = 20)
     plt.show()
-        
+
+    svg_path = r"C:\Users\felix\OneDrive\Documents\Kuliah\2. Master's Texas A&M University\Publications\Conference Paper\Smoothing Paper\Smoothing Simulator\Figures\Fig_2.svg"
+    emf_path = r"C:\Users\felix\OneDrive\Documents\Kuliah\2. Master's Texas A&M University\Publications\Conference Paper\Smoothing Paper\Smoothing Simulator\Figures\Fig_2.emf"
+    inkscape_path = r"C:\Program Files\Inkscape\bin\inkscape.exe"
+
+    convert_svg_to_emf(svg_path, emf_path, inkscape_path=inkscape_path)
+
     return
 
 main()
