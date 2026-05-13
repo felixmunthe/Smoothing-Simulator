@@ -9,14 +9,5 @@ This repository contains research and implementation of various smoothing techni
 # Data
 The dataset used comprises noisy synthetic RNP data from a homogenous, single-layer, low-permeability gas reservoir, as described by Munthe and Lee (2026). This includes data manipulated with additive white Gaussian noise (AWGN) under several noise-presence scenarios.
 
-# License
-This project is released under the MIT License.
-
 # Usage
 Instructions on how to set up and run the analysis, including any prerequisites, required libraries, and execution commands.
-
-# Citation
-If you use the methodologies or data from this project in your research, please cite this study appropriately.
-
-# Contact
-For any other questions or comments about the project, please open an issue or submit a pull request.
